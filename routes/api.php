@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +14,4 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('/sign-in', [UserController::class, 'authenticate']);
-Route::post('/sign-up', [UserController::class, 'store']);
+Route::apiResource('/roles', RoleController::class);
