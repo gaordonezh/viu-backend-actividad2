@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "1fc6b312-8228-4d1c-9c2a-b2cfdd5a28bd",
+		"name": "VIU",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14144645"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "ASDsd",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "asdñ dasd álod",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "87654321L",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "asd1@ddd.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Pa$$w0rd",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "Pa$$w0rd",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+987654321",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "asd",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "iban",
+									"value": "SA2222222222222222222222",
+									"type": "text"
+								},
+								{
+									"key": "about",
+									"value": "asd adasfasfasfasf ASDASDASD",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sign-up",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "seguridadweb@campusviu.es",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "S3gur1d4d?W3b",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sign-in",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
