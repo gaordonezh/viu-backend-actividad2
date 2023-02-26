@@ -14,18 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehicle', function (Blueprint $table) {
-            $table->id();
-            $table->string("plate")->unique();
-            $table->enum("type", ["CARRO", "MOTO", "BUS", "MICROBUS"]);
-            $table->string("brand");
-            $table->string("reference");
-            $table->string("model", 5);
-            $table->string("color", 20);
-            $table->integer("ability");
-            $table->boolean("is_active")->default(true);
-            $table->unsignedBigInteger('user_id');
+            $table->string("plate")->primary()->unique()->nullable(false);
+            $table->enum("type", ["CARRO", "MOTO", "BUS", "MICROBUS"])->nullable(false);
+            $table->string("brand")->nullable(false);
+            $table->string("reference")->nullable(false);
+            $table->string("model", 5)->nullable(false);
+            $table->string("color", 20)->nullable(false);
+            $table->integer("ability")->nullable(false);
+            $table->boolean("is_active")->default(true)->nullable(false);
+            $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign("user_id")->references("id")->on("user")->onUpdate("cascade")->onDelete("restrict");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -23,8 +23,8 @@ return new class extends Migration
             $table->double("price");
             $table->enum("status", ['DISPONIBLE', 'COMPLETO', 'EN CURSO', 'CANCELADO', 'FINALIZADO']);
             $table->string("description");
-            $table->unsignedBigInteger('vehicle_id');
-            $table->foreign("vehicle_id")->references("id")->on("vehicle")->onUpdate("cascade")->onDelete("restrict");
+            $table->string('vehicle_plate');
+            $table->foreign("vehicle_plate")->references("plate")->on("vehicle")->onUpdate("cascade")->onDelete("restrict");
             $table->timestamps();
         });
     }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string("url");
             $table->string("extension");
             $table->boolean("is_valid")->default(true);
-            $table->unsignedBigInteger('vehicle_id');
-            $table->foreign("vehicle_id")->references("id")->on("vehicle")->onUpdate("cascade")->onDelete("cascade");
+            $table->string('vehicle_plate');
+            $table->foreign("vehicle_plate")->references("plate")->on("vehicle")->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }
