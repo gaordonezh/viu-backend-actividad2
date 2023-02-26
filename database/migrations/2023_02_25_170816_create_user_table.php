@@ -15,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->id();
-            $table->string("ndoc")->unique();
-            $table->enum("tdoc", ["DNI", "CARNET EXT", "RUC", "PASAPORTE"]);
-            $table->string("first_name");
-            $table->string("last_name");
-            $table->string("phone");
-            $table->string('email');
-            $table->string('password');
-            $table->boolean("is_active")->default(true);
-            $table->unsignedBigInteger('address_id');
-            $table->foreign("address_id")->references("id")->on("address")->onUpdate("cascade")->onDelete("restrict");
-            $table->unsignedBigInteger('role_id');
-            $table->foreign("role_id")->references("id")->on("role")->onUpdate("cascade")->onDelete("restrict");
+            $table->string("first_name", 20);
+            $table->string("last_name", 40);
+            $table->string("dni", 9);
+            $table->string("email")->unique();
+            $table->string("password");
+            $table->string("phone", 12)->nullable();
+            $table->string("country")->nullable();
+            $table->string("iban");
+            $table->string("about", 250)->nullable();
             $table->timestamps();
         });
     }

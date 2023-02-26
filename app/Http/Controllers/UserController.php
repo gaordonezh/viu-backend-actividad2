@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends ApiController
 {
     private $text_pattern = "/^([A-Za-z ñáéíóú]+)$/";
-    private $phone_pattern = "/(?=[+]{1}+[0-9]{8,11})$/i";
+    private $phone_pattern = "/(?=[+]{1}+[0-9]{8,11})/i";
     private $email_pattern = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i";
     private $dni_pattern = "/(?=[0-9]{8}+[A-Za-z]{1}){9}/";
     private $password_pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
