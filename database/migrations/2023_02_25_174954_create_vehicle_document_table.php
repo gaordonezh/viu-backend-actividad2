@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('vehicle_document', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("url");
-            $table->string("extension");
-            $table->boolean("is_valid")->default(true);
-            $table->string('vehicle_plate');
+            $table->string("name")->nullable(false);
+            $table->string("url")->nullable(false);
+            $table->string("extension")->nullable(false);
+            $table->boolean("is_valid")->default(false);
+            $table->string('vehicle_plate')->nullable(false);
             $table->foreign("vehicle_plate")->references("plate")->on("vehicle")->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
