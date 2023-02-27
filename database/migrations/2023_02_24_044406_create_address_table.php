@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("district");
             $table->string("address");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +18,6 @@ use App\Http\Controllers\RoleController;
 */
 
 Route::apiResource('/roles', RoleController::class);
-
 Route::apiResource('/vehiculos', VehicleController::class);
+Route::apiResource('/addresses', AddressController::class);
+Route::apiResource('/users', UserController::class);
