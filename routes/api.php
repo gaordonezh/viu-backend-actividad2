@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\VehicleController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDocumentController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +23,5 @@ Route::apiResource('/roles', RoleController::class);
 Route::apiResource('/vehiculos', VehicleController::class);
 Route::apiResource('/addresses', AddressController::class);
 Route::apiResource('/users', UserController::class);
+Route::apiResource('/userDocuments', UserDocumentController::class);
+Route::apiResource('/accounts', AccountController::class);

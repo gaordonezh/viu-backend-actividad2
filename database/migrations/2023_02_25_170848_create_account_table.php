@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("account")->unique();
             $table->double("amount")->default(0);
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id')->unique();
             $table->foreign("user_id")->references("id")->on("user")->onUpdate("cascade")->onDelete("restrict");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
