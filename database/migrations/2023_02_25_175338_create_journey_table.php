@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("origin");
             $table->string("destiny");
-            $table->date("datetime_start");
-            $table->date("datetime_end");
+            $table->dateTime("datetime_start");
+            $table->dateTime("datetime_end");
             $table->integer("quotas");
             $table->double("price");
             $table->enum("status", ['DISPONIBLE', 'COMPLETO', 'EN CURSO', 'CANCELADO', 'FINALIZADO']);
