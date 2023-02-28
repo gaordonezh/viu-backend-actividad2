@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\VehicleDocumentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
@@ -33,6 +34,7 @@ Route::middleware("auth:sanctum")->group(function () {
   Route::apiResource('/userDocuments', UserDocumentController::class);
   Route::apiResource('/accounts', AccountController::class);
   Route::apiResource('/vehiclesDocuments', VehicleDocumentController::class);
+  Route::apiResource('/journeys', JourneyController::class);
   Route::apiResource('/transactions', TransactionController::class);
   Route::apiResource('/qualifications', QualificationController::class);
   Route::post("/logout", [AuthController::class, "logout"]);

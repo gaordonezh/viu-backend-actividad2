@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vehicle;
+use App\Models\Journey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class VehicleController extends ApiController
+class JourneyController extends ApiController
 {
-
-    private $object_name = 'Vehiculo';
-
+    private $object_name = 'Viaje';
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +16,7 @@ class VehicleController extends ApiController
      */
     public function index()
     {
-        return $this->sendResponse(Vehicle::all(), "Listado de Vehiculos");
+        return $this->sendResponse(Journey::all(), "Listado de Viajes");
     }
 
     /**
@@ -30,32 +28,32 @@ class VehicleController extends ApiController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "plate" => "required|unique:vehicle,plate",
-            "type" => "required",
-            "brand" => "required",
-            "reference" => "required",
-            "model" => "required|max:5",
-            "color" => "required|max:20",
-            "ability" => "required",
-            "user_id" => "required",
+            "origin" => "required",
+            "destiny" => "required",
+            "datetime_start" => "required",
+            "datetime_end" => "required",
+            "quotas" => "required",
+            "price" => "required",
+            "description" => "required",
+            "vehicle_plate" => "required"
         ]);
 
         if ($validator->fails()) {
             return $this->sendError("Error de validacion", $validator->errors(), 422);
         }
-        Vehicle::create($request->all());
+        Journey::create($request->all());
         return $this->sendResponse($this->object_name ." creado correctamente");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vehicle  $vehicle
+     * @param  \App\Models\Journey  $journey
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($vehicle)
+    public function show($journey)
     {
-        $data = Vehicle::find($vehicle);
+        $data = Journey::find($journey);
 
         if (!isset($data)) {
             return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
@@ -68,32 +66,33 @@ class VehicleController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vehicle  $vehicle
+     * @param  \App\Models\Journey  $journey
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $vehicle)
+    public function update(Request $request,$journey)
     {
         $validator = Validator::make($request->all(), [
-            "type" => "required",
-            "brand" => "required",
-            "reference" => "required",
-            "model" => "required|max:5",
-            "color" => "required|max:20",
-            "ability" => "required",
-            "user_id" => "required",
+            "origin" => "required",
+            "destiny" => "required",
+            "datetime_start" => "required",
+            "datetime_end" => "required",
+            "quotas" => "required",
+            "price" => "required",
+            "description" => "required",
+            "vehicle_plate" => "required"
         ]);
 
         if ($validator->fails()) {
             return $this->sendError("Error de validacion", $validator->errors(), 422);
         }
 
-        $vehicleFinded = Vehicle::find($vehicle);
+        $journeyFinded = Journey::find($journey);
 
-        if (!isset($vehicleFinded)) {
+        if (!isset($journeyFinded)) {
             return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
         }
 
-        $vehicleFinded->update($request->all());
+        $journeyFinded->update($request->all());
 
         return $this->sendResponse($this->object_name. " actualizado correctamente");
     }
@@ -101,22 +100,22 @@ class VehicleController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vehicle  $vehicle
+     * @param  \App\Models\Journey  $journey
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($vehicle)
+    public function destroy($journey)
     {
-        if (!isset($vehicle)) {
+        if (!isset($journey)) {
             return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
         }
 
-        $vehicleFinded = Vehicle::find($vehicle);
+        $journeyFinded = Journey::find($journey);
 
-        if (!isset($vehicleFinded)) {
+        if (!isset($journeyFinded)) {
             return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
         }
 
-         $vehicleFinded->delete();
-         return $this->sendResponse($this->object_name." eliminado correctamente");
+        $journeyFinded->delete();
+        return $this->sendResponse($this->object_name." eliminado correctamente");
     }
 }
