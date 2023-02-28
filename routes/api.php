@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDocumentController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\TransactionController;
 
@@ -22,12 +23,17 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
-Route::apiResource('/roles', RoleController::class);
-Route::apiResource('/vehicles', VehicleController::class);
-Route::apiResource('/addresses', AddressController::class);
-Route::apiResource('/users', UserController::class);
-Route::apiResource('/userDocuments', UserDocumentController::class);
-Route::apiResource('/accounts', AccountController::class);
-Route::apiResource('/vehiclesDocuments', VehicleDocumentController::class);
-Route::apiResource('/transactions', TransactionController::class);
-Route::apiResource('/qualifications', QualificationController::class);
+Route::post("/login", [AuthController::class, "auth"]);
+
+Route::middleware("auth:sanctum")->group(function () {
+  Route::apiResource('/users', UserController::class);
+  Route::apiResource('/roles', RoleController::class);
+  Route::apiResource('/vehicles', VehicleController::class);
+  Route::apiResource('/addresses', AddressController::class);
+  Route::apiResource('/userDocuments', UserDocumentController::class);
+  Route::apiResource('/accounts', AccountController::class);
+  Route::apiResource('/vehiclesDocuments', VehicleDocumentController::class);
+  Route::apiResource('/transactions', TransactionController::class);
+  Route::apiResource('/qualifications', QualificationController::class);
+  Route::post("/logout", [AuthController::class, "logout"]);
+});
