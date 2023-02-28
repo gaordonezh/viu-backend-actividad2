@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('account_id');
             $table->foreign("account_id")->references("id")->on("account")->onUpdate("cascade")->onDelete("restrict");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

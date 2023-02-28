@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDocumentController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::apiResource('/users', UserController::class);
 Route::apiResource('/userDocuments', UserDocumentController::class);
 Route::apiResource('/accounts', AccountController::class);
 Route::apiResource('/vehiclesDocuments', VehicleDocumentController::class);
+Route::apiResource('/transactions', TransactionController::class);
