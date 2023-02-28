@@ -80,13 +80,13 @@ class TransactionController extends ApiController
             return $this->sendError("Error de validacion", $validator->errors(), 422);
         }
 
-        $vehicleFinded = Transaction::find($transaction);
+        $dataFinded = Transaction::find($transaction);
 
-        if (!isset($vehicleFinded)) {
-            return $this->sendError("Not found", ["Transacción no encontrado"], 400);
+        if (!isset($dataFinded)) {
+            return $this->sendError("Not found", ["Transacción no encontrada"], 400);
         }
 
-        $vehicleFinded->update($request->all());
+        $dataFinded->update($request->all());
 
         return $this->sendResponse("Transacción actualizada correctamente");
     }
@@ -103,13 +103,13 @@ class TransactionController extends ApiController
             return $this->sendError("Not found", ["Transacción no encontrada"], 400);
         }
 
-        $vehicleFinded = Transaction::find($transaction);
+        $dataFinded = Transaction::find($transaction);
 
-        if (!isset($vehicleFinded)) {
+        if (!isset($dataFinded)) {
             return $this->sendError("Not found", ["Transacción no encontrada"], 400);
         }
 
-        $vehicleFinded->delete();
+        $dataFinded->delete();
         return $this->sendResponse(" Transacción eliminada correctamente");
     }
 }

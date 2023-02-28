@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Qualification>
  */
-class TransactionFactory extends Factory
+class QualificationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,10 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            'amount' => fake()->randomNumber(3),
-            'isDiscount' => fake()->randomElement([0, 1]),
-            'date' => fake()->dateTime(),
+            'stars' => fake()->randomElement([1, 2, 3, 4, 5]),
+            'comment' => fake()->paragraph(1),
             'journey_id' => 1,
-            "account_id" => 1
+            "user_id" => 1
         ];
     }
 }

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Account::factory(1)->create();
         \App\Models\Vehicle::factory(3)->create();
         \App\Models\VehicleDocument::factory(3)->create();
-        \App\Models\Transaction::factory(3)->create();
+        /* \App\Models\Transaction::factory(3)->create();
+        \App\Models\Qualification::factory(2)->create(); */
     }
 }
