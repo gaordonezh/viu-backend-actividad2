@@ -14,9 +14,30 @@ class JourneyController extends ApiController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sendResponse(Journey::all(), "Listado de Viajes");
+        $journeys = Journey::query()
+            ->join('vehicle', 'vehicle.plate', '=', 'journey.vehicle_plate')
+            ->join('user','user.id', '=','vehicle.user_id');
+
+        // Aplicar filtros
+        if ($request->filled('ndoc')) {
+            $journeys->where('user.ndoc', '=', $request->ndoc);
+        }
+        if ($request->filled('name_lastname')) {
+            $journeys->where('user.first_name', 'LIKE', '%' .$request->name_lastname. '%')
+                     ->orWhere('user.last_name', 'LIKE', '%' .$request->name_lastname. '%');
+        }
+        if ($request->filled('creted_at')) {
+            $journeys->whereRaw('DATE(journey.created_at) = ?', [$request->created_at]);
+        }
+        if ($request->filled('status')) {
+            $journeys->where('status', '=', $request->status);
+        }
+
+        $journeys = $journeys->paginate(10);
+
+        return $this->sendResponse($journeys, "Listado de Viajes");
     }
 
     /**
