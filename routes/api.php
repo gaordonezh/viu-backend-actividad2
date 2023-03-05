@@ -26,6 +26,25 @@ use App\Http\Controllers\TransactionController;
 
 Route::post("/login", [AuthController::class, "auth"]);
 
+/**
+ * ADMIN MODULE SERVICES
+ */
+Route::get("/journeys/summary", [JourneyController::class, "transactionSummary"]);
+/**
+ * Pending vehicles documents
+ */
+Route::get("/vehiclesDocuments/pendingUsers", [VehicleDocumentController::class, "usersValidateDocs"]);
+Route::get("/vehiclesDocuments/byUser/{userId}/{vehiclePlate}", [VehicleDocumentController::class, "docsToValidateByUser"]);
+/**
+ * Pending personal documents
+ */
+Route::get("/userDocuments/pendingUsers", [UserDocumentController::class, "usersValidateDocs"]);
+Route::get("/userDocuments/byUser/{userId}", [UserDocumentController::class, "docsByUser"]);
+
+
+/**
+ * CRUD SERVICES
+ */
 Route::middleware("auth:sanctum")->group(function () {
   Route::apiResource('/users', UserController::class);
   Route::apiResource('/roles', RoleController::class);

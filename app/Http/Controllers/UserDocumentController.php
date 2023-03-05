@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserDocumentController extends ApiController
@@ -130,5 +132,17 @@ class UserDocumentController extends ApiController
         $documentFound->delete();
 
         return $this->sendResponse("Documento eliminado correctamente");
+    }
+
+    public function docsByUser($userId){
+        $docs = UserDocument::where('user_id','=', $userId)->get();
+        return $this->sendResponse($docs,"Listado de Documentos.");
+    }
+
+    public function usersValidateDocs(){
+        $resultUsersQuery = User::select('user.id',DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("COALESCE('Documentos personales') AS type_doc"),'user.phone')
+            ->where('user.is_active', '=', false)
+            ->orderBy('user.created_at','asc')->get();
+        return $this->sendResponse($resultUsersQuery,"Listado de los usuarios con documentos pendientes de validar.");
     }
 }

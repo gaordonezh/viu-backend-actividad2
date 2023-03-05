@@ -118,4 +118,22 @@ class JourneyController extends ApiController
         $journeyFinded->delete();
         return $this->sendResponse($this->object_name." eliminado correctamente");
     }
+
+    public function transactionSummary(){
+
+        $result['incourse'] = Journey::where('status','=','EN CURSO')
+            ->count() ;
+
+        $result['finished'] = Journey::where('status','=','FINALIZADO')
+            ->count();
+
+        $result['totalEarnings'] = (Journey::where('status','=','FINALIZADO')
+                ->sum('journey.price')) * 0.1;
+
+        $result['todaysEarnings'] = (Journey::where('status','=','FINALIZADO')
+            ->whereDate('datetime_end', date('Y-m-d'))->get()
+            ->sum('journey.price')) * 0.1;
+
+        return $this->sendResponse($result, "Consulta realizada");
+    }
 }

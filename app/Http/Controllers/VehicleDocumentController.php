@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VehicleDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class VehicleDocumentController extends ApiController
@@ -111,5 +112,24 @@ class VehicleDocumentController extends ApiController
 
         $vehicleDocumentFinded->delete();
         return $this->sendResponse($this->object_name ." eliminado correctamente");
+    }
+
+    public function usersValidateDocs(){
+        $resultUsersQuery = VehicleDocument::select('vehicle.plate','vehicle.user_id',DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("COALESCE('Documentos de vehiculo') AS type_doc"),'user.phone')
+            ->join('vehicle', 'vehicle_document.vehicle_plate', '=', 'vehicle.plate')
+            ->join('user', 'user.id', '=', 'vehicle.user_id')
+            ->where('is_valid','=', false)
+            ->orderBy('vehicle_document.created_at','asc')->get();
+        return $this->sendResponse($resultUsersQuery,"Listado de los usuarios con documentos pendientes de validar.");
+    }
+
+    public function docsToValidateByUser($userId,$vehiclePlate){
+        $resultVehicleDocs = VehicleDocument::select('vehicle_document.*')
+            ->join('vehicle', 'vehicle_document.vehicle_plate', '=', 'vehicle.plate')
+            ->where('is_valid','=', false)
+            ->where('vehicle_plate','=',$vehiclePlate)
+            ->where('vehicle.user_id','=',$userId)->get();
+
+        return $this->sendResponse($resultVehicleDocs,"Listado de Documentos de vehiculo.");
     }
 }
