@@ -111,4 +111,16 @@ class QualificationController extends ApiController
         $dataFinded->delete();
         return $this->sendResponse(" Calificación eliminada correctamente");
     }
+
+
+    public function getByJourney($journeyId){
+        $data = Qualification::where('journey_id','=',$journeyId);
+
+        if (!isset($data)) {
+            return $this->sendError("Not found", ["Calificación no encontrada"], 400);
+        }
+
+        return $this->sendResponse($data, "Calificación encontrada");
+    }
+
 }

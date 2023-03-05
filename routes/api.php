@@ -41,6 +41,8 @@ Route::get("/vehiclesDocuments/byUser/{userId}/{vehiclePlate}", [VehicleDocument
 Route::get("/userDocuments/pendingUsers", [UserDocumentController::class, "usersValidateDocs"]);
 Route::get("/userDocuments/byUser/{userId}", [UserDocumentController::class, "docsByUser"]);
 
+Route::get('/qualifications/journey/{journeyId}',  [QualificationController::class, "getByJourney"]);
+
 
 /**
  * CRUD SERVICES
