@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserDocument;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -20,8 +21,16 @@ class UserDocumentController extends ApiController
      */
     public function index()
     {
-        $data = UserDocument::all();
-        return $this->sendResponse($data, "Listado de documentos");
+        $userDocs = UserDocument::select("user_document.*", "user.phone", DB::raw("CONCAT(user.first_name, ' ', user.last_name) AS full_name"), DB::raw("'Documentos personales' AS type"))
+            ->join("user", "user.id", "=", "user_document.user_id")
+            ->get();
+
+        $vehicleDocs = Vehicle::select("vehicle_document.*", "user.phone", DB::raw("CONCAT(user.first_name, ' ', user.last_name) AS full_name"), DB::raw("'Documentos de vehículo' AS type"))
+            ->join("vehicle_document", "vehicle_document.vehicle_plate", "=", "vehicle.plate")
+            ->join("user", "user.id", "=", "vehicle.user_id")
+            ->get();
+
+        return $this->sendResponse([...$userDocs, ...$vehicleDocs], "Listado de documentos");
     }
 
     /**
@@ -134,15 +143,17 @@ class UserDocumentController extends ApiController
         return $this->sendResponse("Documento eliminado correctamente");
     }
 
-    public function docsByUser($userId){
-        $docs = UserDocument::where('user_id','=', $userId)->get();
-        return $this->sendResponse($docs,"Listado de Documentos.");
+    public function docsByUser($userId)
+    {
+        $docs = UserDocument::where('user_id', '=', $userId)->get();
+        return $this->sendResponse($docs, "Listado de Documentos.");
     }
 
-    public function usersValidateDocs(){
-        $resultUsersQuery = User::select('user.id',DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("COALESCE('Documentos personales') AS type_doc"),'user.phone')
+    public function usersValidateDocs()
+    {
+        $resultUsersQuery = User::select('user.id', DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("COALESCE('Documentos personales') AS type_doc"), 'user.phone')
             ->where('user.is_active', '=', false)
-            ->orderBy('user.created_at','asc')->get();
-        return $this->sendResponse($resultUsersQuery,"Listado de los usuarios con documentos pendientes de validar.");
+            ->orderBy('user.created_at', 'asc')->get();
+        return $this->sendResponse($resultUsersQuery, "Listado de los usuarios con documentos pendientes de validar.");
     }
 }
