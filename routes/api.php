@@ -13,6 +13,5 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::post('/sign-in', [UserController::class, 'authenticate']);
+Route::post('/sign-in', [UserController::class, 'authenticate'])->middleware('throttle:10,1');
 Route::post('/sign-up', [UserController::class, 'store']);
