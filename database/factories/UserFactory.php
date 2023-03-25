@@ -30,4 +30,15 @@ class UserFactory extends Factory
             'role_id' => fake()->numberBetween(1, 3),
         ];
     }
+    public function userAdmin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'email' => 'seguridadweb@campusviu.es',
+                'password' => Hash::make('S3gur1d4d?W3b'),
+                'is_active' => 1,
+                'role_id' => 1,
+            ];
+        });
+    }
 }
