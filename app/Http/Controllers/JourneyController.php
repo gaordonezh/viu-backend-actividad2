@@ -28,7 +28,7 @@ class JourneyController extends ApiController
             $journeys->where('user.first_name', 'LIKE', '%' .$request->name_lastname. '%')
                      ->orWhere('user.last_name', 'LIKE', '%' .$request->name_lastname. '%');
         }
-        if ($request->filled('creted_at')) {
+        if ($request->filled('created_at')) {
             $journeys->whereRaw('DATE(journey.created_at) = ?', [$request->created_at]);
         }
         if ($request->filled('status')) {
