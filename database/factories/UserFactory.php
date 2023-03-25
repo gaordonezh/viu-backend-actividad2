@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'password' => Hash::make(fake()->password()),
             'is_active' => fake()->numberBetween(0, 1),
             'address_id' => fake()->numberBetween(1, 3),
-            'role_id' => fake()->numberBetween(1, 3),
+            'role_id' => 2,
         ];
     }
     public function userAdmin()
