@@ -15,7 +15,7 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $data = Address::all();
+        $data = Address::paginate(10);
         return $this->sendResponse($data, "Listado de direcciones");
     }
 

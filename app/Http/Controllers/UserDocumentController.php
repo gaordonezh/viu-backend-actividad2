@@ -21,11 +21,11 @@ class UserDocumentController extends ApiController
      */
     public function index()
     {
-        $userDocs = UserDocument::select("user_document.*", "user.phone", DB::raw("CONCAT(user.first_name, ' ', user.last_name) AS full_name"), DB::raw("'Documentos personales' AS type"))
+        $userDocs = UserDocument::select("user_document.*", "user.phone",DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("'Documentos personales' AS type"))
             ->join("user", "user.id", "=", "user_document.user_id")
             ->get();
 
-        $vehicleDocs = Vehicle::select("vehicle_document.*", "vehicle.user_id", "user.phone", DB::raw("CONCAT(user.first_name, ' ', user.last_name) AS full_name"), DB::raw("'Documentos de vehículo' AS type"))
+        $vehicleDocs = Vehicle::select("vehicle_document.*", "vehicle.user_id", "user.phone", DB::raw("CONCAT(\"user\".first_name, ' ', \"user\".last_name) AS full_name"), DB::raw("'Documentos de vehículo' AS type"))
             ->join("vehicle_document", "vehicle_document.vehicle_plate", "=", "vehicle.plate")
             ->join("user", "user.id", "=", "vehicle.user_id")
             ->get();

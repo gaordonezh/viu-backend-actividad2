@@ -19,7 +19,7 @@ class VehicleDocumentController extends ApiController
      */
     public function index()
     {
-        return $this->sendResponse(VehicleDocument::all(), "Listado de Documentos de vehiculo");
+        return $this->sendResponse(VehicleDocument::paginate(10), "Listado de Documentos de vehiculo");
     }
 
     /**

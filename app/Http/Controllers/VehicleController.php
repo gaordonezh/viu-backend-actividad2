@@ -18,7 +18,7 @@ class VehicleController extends ApiController
      */
     public function index()
     {
-        return $this->sendResponse(Vehicle::all(), "Listado de Vehiculos");
+        return $this->sendResponse(Vehicle::paginate(10), "Listado de Vehiculos");
     }
 
     /**

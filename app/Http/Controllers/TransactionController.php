@@ -15,7 +15,7 @@ class TransactionController extends ApiController
      */
     public function index()
     {
-        return $this->sendResponse(Transaction::all(), "Listado de transacciones");
+        return $this->sendResponse(Transaction::paginate(10), "Listado de transacciones");
     }
 
     /**

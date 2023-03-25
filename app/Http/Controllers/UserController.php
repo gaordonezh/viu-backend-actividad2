@@ -21,7 +21,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $data = User::all();
+        $data = User::paginate(10);
         return $this->sendResponse($data, "Listado de usuarios");
     }
 

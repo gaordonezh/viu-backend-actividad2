@@ -15,7 +15,7 @@ class QualificationController extends ApiController
      */
     public function index()
     {
-        return $this->sendResponse(Qualification::all(), "Listado de calificaciones");
+        return $this->sendResponse(Qualification::paginate(10), "Listado de calificaciones");
     }
 
     /**
