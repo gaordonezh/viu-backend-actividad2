@@ -19,9 +19,16 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::paginate(10);
+        $data = User::query()
+            ->where("ndoc", "LIKE", "%" . $request->search . "%")
+            ->orWhere("first_name", "LIKE", "%" . $request->search . "%")
+            ->orWhere("last_name", "LIKE", "%" . $request->search . "%")
+            ->orWhere("email", "LIKE", "%" . $request->search . "%");
+
+        $data = $data->paginate(10);
+
         return $this->sendResponse($data, "Listado de usuarios");
     }
 
@@ -104,12 +111,12 @@ class UserController extends ApiController
     public function update(Request $request, $addressId)
     {
         $validator = Validator::make($request->all(), [
-            "ndoc" => "required|min:2|max:10|unique:user,ndoc,".$addressId,
+            "ndoc" => "required|min:2|max:10|unique:user,ndoc," . $addressId,
             "tdoc" => "required|in:DNI,CARNET EXT,RUC,PASAPORTE",
             "first_name" => "required|min:2|max:20|regex:" . $this->text_pattern,
             "last_name" => "required|min:2|max:40|regex:" . $this->text_pattern,
             "phone" => "min:9|max:12|regex:" . $this->phone_pattern,
-            "email" => "required|email|regex:" . $this->email_pattern. "|unique:user,email,".$addressId,
+            "email" => "required|email|regex:" . $this->email_pattern . "|unique:user,email," . $addressId,
             'is_active' => "required|in:0,1",
             'address_id' => "required|exists:address,id",
             'role_id' => "required|exists:role,id",
