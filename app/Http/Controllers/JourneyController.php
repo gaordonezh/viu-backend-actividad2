@@ -18,15 +18,16 @@ class JourneyController extends ApiController
     {
         $journeys = Journey::query()
             ->join('vehicle', 'vehicle.plate', '=', 'journey.vehicle_plate')
-            ->join('user','user.id', '=','vehicle.user_id');
+            ->join('user', 'user.id', '=', 'vehicle.user_id')
+            ->select("journey.*", "vehicle.*", "user.ndoc", "user.tdoc", "user.first_name", "user.last_name", "user.phone", "user.email");
 
         // Aplicar filtros
         if ($request->filled('ndoc')) {
             $journeys->where('user.ndoc', '=', $request->ndoc);
         }
         if ($request->filled('name_lastname')) {
-            $journeys->where('user.first_name', 'LIKE', '%' .$request->name_lastname. '%')
-                     ->orWhere('user.last_name', 'LIKE', '%' .$request->name_lastname. '%');
+            $journeys->where('user.first_name', 'LIKE', '%' . $request->name_lastname . '%')
+                ->orWhere('user.last_name', 'LIKE', '%' . $request->name_lastname . '%');
         }
         if ($request->filled('created_at')) {
             $journeys->whereRaw('DATE(journey.created_at) = ?', [$request->created_at]);
@@ -63,7 +64,7 @@ class JourneyController extends ApiController
             return $this->sendError("Error de validacion", $validator->errors(), 422);
         }
         Journey::create($request->all());
-        return $this->sendResponse($this->object_name ." creado correctamente");
+        return $this->sendResponse($this->object_name . " creado correctamente");
     }
 
     /**
@@ -77,10 +78,10 @@ class JourneyController extends ApiController
         $data = Journey::find($journey);
 
         if (!isset($data)) {
-            return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
+            return $this->sendError("Not found", [$this->object_name . " no encontrado"], 400);
         }
 
-        return $this->sendResponse($data, $this->object_name. " encontrado");
+        return $this->sendResponse($data, $this->object_name . " encontrado");
     }
 
     /**
@@ -90,7 +91,7 @@ class JourneyController extends ApiController
      * @param  \App\Models\Journey  $journey
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request,$journey)
+    public function update(Request $request, $journey)
     {
         $validator = Validator::make($request->all(), [
             "origin" => "required",
@@ -110,12 +111,12 @@ class JourneyController extends ApiController
         $journeyFinded = Journey::find($journey);
 
         if (!isset($journeyFinded)) {
-            return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
+            return $this->sendError("Not found", [$this->object_name . " no encontrado"], 400);
         }
 
         $journeyFinded->update($request->all());
 
-        return $this->sendResponse($this->object_name. " actualizado correctamente");
+        return $this->sendResponse($this->object_name . " actualizado correctamente");
     }
 
     /**
@@ -127,31 +128,32 @@ class JourneyController extends ApiController
     public function destroy($journey)
     {
         if (!isset($journey)) {
-            return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
+            return $this->sendError("Not found", [$this->object_name . " no encontrado"], 400);
         }
 
         $journeyFinded = Journey::find($journey);
 
         if (!isset($journeyFinded)) {
-            return $this->sendError("Not found", [$this->object_name. " no encontrado"], 400);
+            return $this->sendError("Not found", [$this->object_name . " no encontrado"], 400);
         }
 
         $journeyFinded->delete();
-        return $this->sendResponse($this->object_name." eliminado correctamente");
+        return $this->sendResponse($this->object_name . " eliminado correctamente");
     }
 
-    public function transactionSummary(){
+    public function transactionSummary()
+    {
 
-        $result['incourse'] = Journey::where('status','=','EN CURSO')
-            ->count() ;
-
-        $result['finished'] = Journey::where('status','=','FINALIZADO')
+        $result['incourse'] = Journey::where('status', '=', 'EN CURSO')
             ->count();
 
-        $result['totalEarnings'] = (Journey::where('status','=','FINALIZADO')
-                ->sum('journey.price')) * 0.1;
+        $result['finished'] = Journey::where('status', '=', 'FINALIZADO')
+            ->count();
 
-        $result['todaysEarnings'] = (Journey::where('status','=','FINALIZADO')
+        $result['totalEarnings'] = (Journey::where('status', '=', 'FINALIZADO')
+            ->sum('journey.price')) * 0.1;
+
+        $result['todaysEarnings'] = (Journey::where('status', '=', 'FINALIZADO')
             ->whereDate('datetime_end', date('Y-m-d'))->get()
             ->sum('journey.price')) * 0.1;
 

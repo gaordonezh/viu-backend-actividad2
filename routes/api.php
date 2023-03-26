@@ -25,7 +25,8 @@ use App\Http\Controllers\TransactionController;
 */
 
 Route::post("/login", [AuthController::class, "auth"]);
-
+Route::post('/sign-up', [UserController::class, "store"]);
+Route::post("/create-address", [AddressController::class, "store"]);
 /**
  * CRUD SERVICES
  */
